@@ -1,10 +1,9 @@
-import cards
+import deck as dk
 
 
 def generate_initial_state(num_players):
-    deck = cards.get_deck()
-    deck = cards.shuffle(deck)
-    return deal(deck, num_players)
+    initial_deck = dk.Deck()
+    return deal(initial_deck, num_players)
 
 
 def deal(deck, num_players):

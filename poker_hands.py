@@ -1,5 +1,3 @@
-import cards
-
 HIGH_CARD = "High Card"
 ONE_PAIR = "One Pair"
 TWO_PAIR = "Two Pair"
