@@ -43,3 +43,20 @@ def two_pair(hand):
             pair = [prev_card, card]
         prev_card = card
     return pair
+
+
+def three_of_a_kind(hand):
+    triplet = None
+    if len(hand) < 3:
+        return triplet
+
+    hand.sort(key=lambda card: cards.ranking(card))
+    i = 0
+    while i < len(hand):
+        first_card = hand[i]
+        second_card = hand[i + 1]
+        third_card = hand[i + 2]
+        if first_card['rank'] == second_card['rank'] == third_card['rank']:
+            triplet = [first_card, second_card, third_card]
+        i += 3
+    return triplet
