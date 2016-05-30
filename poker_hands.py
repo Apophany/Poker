@@ -28,11 +28,18 @@ def get_hand_ranks():
 
 
 def high_card(hand):
-    ranks = cards.ranks()
-    highest_card = {}
-    rank = -1
+    return max(
+        hand,
+        key=lambda card: cards.ranking(card)
+    )
+
+
+def two_pair(hand):
+    hand.sort(key=lambda card: cards.ranking(card))
+    pair = None
+    prev_card = {'rank': -1}
     for card in hand:
-        if ranks.index(card['rank']) > rank:
-            highest_card = card
-            rank = ranks.index(card['rank'])
-    return highest_card
+        if prev_card['rank'] == card['rank']:
+            pair = [prev_card, card]
+        prev_card = card
+    return pair

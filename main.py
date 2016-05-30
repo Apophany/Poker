@@ -24,4 +24,4 @@ def deal(deck, num_players):
 
 
 if __name__ == "__main__":
-    generate_initial_state(5)
+    generate_initial_state(3)

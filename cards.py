@@ -23,3 +23,7 @@ def ranks():
         "K",
         "A"
     ]
+
+
+def ranking(card):
+    return ranks().index(card['rank'])
