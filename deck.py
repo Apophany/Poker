@@ -1,12 +1,12 @@
-import card
+import cards
 import random as rnd
 
 
 class Deck:
     def __init__(self):
         self.cards = []
-        for suit in card.suits():
-            for rank in card.ranks():
+        for suit in cards.suits():
+            for rank in cards.ranks():
                 self.cards.append({
                     'suit': suit,
                     'rank': rank

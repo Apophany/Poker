@@ -1,4 +1,5 @@
 import deck as dk
+import poker_hands as ph
 
 
 def generate_initial_state(num_players):
@@ -17,7 +18,9 @@ def deal(deck, num_players):
             current_hand = [deck.pop()]
             player_hands[(i / 2) - 1] = current_hand
 
-    print player_hands
+    for hand in player_hands:
+        print hand
+        print (ph.high_card(hand))
 
 
 if __name__ == "__main__":

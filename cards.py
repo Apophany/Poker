@@ -1,5 +1,3 @@
-
-
 def suits():
     return [
         "Hearts",

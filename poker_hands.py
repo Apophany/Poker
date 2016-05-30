@@ -1,3 +1,6 @@
+import cards
+
+NOTHING = "Nothing"
 HIGH_CARD = "High Card"
 ONE_PAIR = "One Pair"
 TWO_PAIR = "Two Pair"
@@ -11,6 +14,7 @@ STRAIGHT_FLUSH = "Straight Flush"
 
 def get_hand_ranks():
     return {
+        NOTHING: 0,
         HIGH_CARD: 1,
         ONE_PAIR: 2,
         TWO_PAIR: 3,
@@ -22,3 +26,13 @@ def get_hand_ranks():
         STRAIGHT_FLUSH: 9
     }
 
+
+def high_card(hand):
+    ranks = cards.ranks()
+    highest_card = {}
+    rank = -1
+    for card in hand:
+        if ranks.index(card['rank']) > rank:
+            highest_card = card
+            rank = ranks.index(card['rank'])
+    return highest_card
