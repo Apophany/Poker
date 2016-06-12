@@ -1,5 +1,6 @@
 import deck as dk
 import hand_stats as hs
+import probability_display as pd
 
 
 def generate_initial_state(num_players):
@@ -20,8 +21,9 @@ def deal(deck, num_players):
 
     for hand in player_hands:
         print hand
-        print hs.hand_probabilities(hand, 50, 3)
 
+    probs = hs.hand_probabilities(player_hands[0], 50, 3)
+    pd.graph_distribution(probs)
 
 if __name__ == "__main__":
     generate_initial_state(3)

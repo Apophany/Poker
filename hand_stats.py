@@ -5,7 +5,15 @@ import scipy.special as sp
 def hand_probabilities(hand, cards_remaining, cards_to_draw, table_cards=None):
     probabilities = {}
     for hand_rank in poker_hands.hand_ranks():
-        probabilities[hand_rank] = calculate_prob(hand_rank, hand, cards_remaining, cards_to_draw)
+        if hand_rank is poker_hands.HIGH_CARD or hand_rank is poker_hands.NOTHING:
+            continue
+
+        probabilities[hand_rank] = calculate_prob(
+            hand_rank,
+            hand,
+            cards_remaining,
+            cards_to_draw
+        )
     return probabilities
 
 
