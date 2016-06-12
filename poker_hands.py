@@ -12,7 +12,7 @@ FOUR_OF_A_KIND = "Four of a Kind"
 STRAIGHT_FLUSH = "Straight Flush"
 
 
-def get_hand_ranks():
+def hand_ranks():
     return {
         NOTHING: 0,
         HIGH_CARD: 1,
@@ -34,7 +34,7 @@ def high_card(hand):
     )
 
 
-def two_pair(hand):
+def one_pair(hand):
     hand.sort(key=lambda card: cards.ranking(card))
     pair = None
     prev_card = {'rank': -1}

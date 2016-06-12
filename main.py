@@ -1,5 +1,5 @@
 import deck as dk
-import poker_hands as ph
+import hand_stats as hs
 
 
 def generate_initial_state(num_players):
@@ -20,7 +20,7 @@ def deal(deck, num_players):
 
     for hand in player_hands:
         print hand
-        print (ph.high_card(hand))
+        print hs.hand_probabilities(hand, 50, 3)
 
 
 if __name__ == "__main__":
