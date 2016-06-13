@@ -20,6 +20,7 @@ def hand_probabilities(hand, cards_remaining, cards_to_draw, table_cards=None):
 def calculate_prob(hand_rank, hand, cards_remaining, cards_to_draw):
     return {
         poker_hands.ONE_PAIR: one_pair_probability,
+        poker_hands.TWO_PAIR: two_pair_probability,
         poker_hands.THREE_OF_A_KIND: three_of_a_kind_probability
     }.get(hand_rank, null_probability)(hand, cards_remaining, cards_to_draw)
 
@@ -27,12 +28,51 @@ def calculate_prob(hand_rank, hand, cards_remaining, cards_to_draw):
 def one_pair_probability(hand, cards_remaining, cards_to_draw):
     if poker_hands.one_pair(hand):
         return 1
-    return hypergeometric_pmf(6, 1, cards_remaining - 6, cards_to_draw - 1, cards_remaining, cards_to_draw)
+    return hypergeometric_pmf(
+        6,
+        1,
+        cards_remaining - 6,
+        cards_to_draw - 1,
+        cards_remaining,
+        cards_to_draw
+    )
+
+
+def two_pair_probability(hand, cards_remaining, cards_to_draw):
+    if poker_hands.one_pair(hand):
+        probability = hypergeometric_pmf(
+            4,
+            2,
+            cards_remaining - 4,
+            cards_to_draw - 2,
+            cards_remaining,
+            cards_to_draw
+        )
+    else:
+        probability = (
+            sp.comb(3, 1)
+            * hypergeometric_pmf(
+                3,
+                1,
+                cards_remaining - 2 * 3,
+                cards_to_draw - 2,
+                cards_remaining,
+                cards_to_draw
+            )
+        )
+    return probability
 
 
 def three_of_a_kind_probability(hand, cards_remaining, cards_to_draw):
     if poker_hands.one_pair(hand):
-        probability = hypergeometric_pmf(2, 1, cards_remaining - 2, cards_to_draw - 1, cards_remaining, cards_to_draw)
+        probability = hypergeometric_pmf(
+            2,
+            1,
+            cards_remaining - 2,
+            cards_to_draw - 1,
+            cards_remaining,
+            cards_to_draw
+        )
     else:
         probability = 2 * hypergeometric_pmf(
             3,
