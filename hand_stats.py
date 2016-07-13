@@ -21,7 +21,8 @@ def calculate_prob(hand_rank, hand, cards_remaining, cards_to_draw):
     return {
         poker_hands.ONE_PAIR: one_pair_probability,
         poker_hands.TWO_PAIR: two_pair_probability,
-        poker_hands.THREE_OF_A_KIND: three_of_a_kind_probability
+        poker_hands.THREE_OF_A_KIND: three_of_a_kind_probability,
+        poker_hands.STRAIGHT: straight_probability
     }.get(hand_rank, null_probability)(hand, cards_remaining, cards_to_draw)
 
 
@@ -50,7 +51,7 @@ def two_pair_probability(hand, cards_remaining, cards_to_draw):
         )
     else:
         probability = (
-            sp.comb(3, 1)
+            nCr(3, 1)
             * hypergeometric_pmf(
                 3,
                 1,
@@ -85,15 +86,20 @@ def three_of_a_kind_probability(hand, cards_remaining, cards_to_draw):
     return probability
 
 
+def straight_probability(hand, cards_remaining, cards_to_draw):
+    return 0
+
+
 # See: https://en.wikipedia.org/wiki/Hypergeometric_distribution
 def hypergeometric_pmf(outs, outs_required, non_outs, non_outs_to_draw, cards_remaining, cards_to_draw):
     return (
-        (
-            sp.comb(outs, outs_required)
-            * sp.comb(non_outs, non_outs_to_draw)
-        )
-        / sp.comb(cards_remaining, cards_to_draw)
+        (nCr(outs, outs_required) * nCr(non_outs, non_outs_to_draw))
+        / nCr(cards_remaining, cards_to_draw)
     )
+
+
+def nCr(n, r):
+    return sp.comb(n, r, exact=False)
 
 
 def null_probability(hand, cards_remaining, turn):
