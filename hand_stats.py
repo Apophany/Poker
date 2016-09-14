@@ -1,5 +1,7 @@
 import poker_hands
+import cards as cards
 import scipy.special as sp
+import math as math
 
 
 def hand_probabilities(hand, cards_remaining, cards_to_draw, table_cards=None):
@@ -87,7 +89,40 @@ def three_of_a_kind_probability(hand, cards_remaining, cards_to_draw):
 
 
 def straight_probability(hand, cards_remaining, cards_to_draw):
-    return 0
+    hand.sort(key=lambda card: cards.ranking(card))
+
+    high_card = hand[1]
+    low_card = hand[0]
+    low_card_rank = cards.ranking(low_card)
+    high_card_rank = cards.ranking(high_card)
+
+    card_gap = cards.ranking(high_card) - cards.ranking(low_card)
+
+    if card_gap > 4 and cards_to_draw < 4:
+        return 0
+    elif card_gap < 4 and cards_to_draw < 3:
+        return 0
+
+    if card_gap > 4:
+        p_lower_straight = p_outside_straight(cards_remaining, cards_to_draw, low_card_rank)
+        p_higher_straight = p_outside_straight(cards_remaining, cards_to_draw, high_card_rank)
+        p_straight = p_lower_straight + p_higher_straight
+    else:
+        p_straight = 0
+
+    return p_straight
+
+
+def p_outside_straight(cards_remaining, cards_to_draw, low_card_rank):
+    n_straights = min(5, min(low_card_rank, 12 - low_card_rank))
+    return (
+               (
+                   n_straights
+                   * math.pow(nCr(4, 1), 4)
+                   * nCr(cards_remaining - 4 * 4, cards_to_draw - 4)
+               )
+               - n_straights
+           ) / nCr(50, cards_to_draw)
 
 
 # See: https://en.wikipedia.org/wiki/Hypergeometric_distribution

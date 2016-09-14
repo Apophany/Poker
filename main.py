@@ -22,7 +22,7 @@ def deal(deck, num_players):
     for hand in player_hands:
         print hand
 
-    probs = hs.hand_probabilities(player_hands[0], 50, 3)
+    probs = hs.hand_probabilities(player_hands[0], 50, 5)
     pd.graph_distribution(probs)
 
 if __name__ == "__main__":
